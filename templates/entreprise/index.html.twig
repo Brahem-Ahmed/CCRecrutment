@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Entreprise index{% endblock %}
+
+{% block body %}
+    <h1>Entreprise index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>User</th>
+                <th>Nom</th>
+                <th>Email</th>
+                <th>Mot_de_passe</th>
+                <th>Role</th>
+                <th>Date_inscription</th>
+                <th>Etat</th>
+                <th>Nom_entreprise</th>
+                <th>Secteur</th>
+                <th>Site_web</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entreprise in entreprises %}
+            <tr>
+                <td>{{ entreprise.id }}</td>
+                <td>{{ entreprise.User }}</td>
+                <td>{{ entreprise.nom }}</td>
+                <td>{{ entreprise.email }}</td>
+                <td>{{ entreprise.motDePasse }}</td>
+                <td>{{ entreprise.role }}</td>
+                <td>{{ entreprise.dateInscription ? entreprise.dateInscription|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ entreprise.etat ? 'Yes' : 'No' }}</td>
+                <td>{{ entreprise.nomEntreprise }}</td>
+                <td>{{ entreprise.secteur }}</td>
+                <td>{{ entreprise.siteWeb }}</td>
+                <td>
+                    <a href="{{ path('app_entreprise_show', {'id': entreprise.id}) }}">show</a>
+                    <a href="{{ path('app_entreprise_edit', {'id': entreprise.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="12">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_entreprise_new') }}">Create new</a>
+{% endblock %}

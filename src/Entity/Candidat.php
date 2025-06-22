@@ -2,18 +2,15 @@
 
 namespace App\Entity;
 
+use App\Enums\UserRole;
 use App\Repository\CandidatRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CandidatRepository::class)]
-class Candidat
+class Candidat extends User
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     private ?string $prenom = null;
@@ -32,7 +29,9 @@ class Candidat
 
     public function __construct()
     {
+
         $this->my_candidatures = new ArrayCollection();
+        $this->setRole(UserRole::CANDIDAT); // Auto-assign role
     }
 
     //Relationships

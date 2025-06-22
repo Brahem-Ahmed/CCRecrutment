@@ -2,18 +2,16 @@
 
 namespace App\Entity;
 
+use App\Enums\UserRole;
 use App\Repository\EntrepriseRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EntrepriseRepository::class)]
-class Entreprise
+class Entreprise extends User
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+
 
     #[ORM\Column(length: 255)]
     private ?string $nom_entreprise = null;
@@ -33,6 +31,7 @@ class Entreprise
     public function __construct()
     {
         $this->offres = new ArrayCollection();
+        $this->setRole(UserRole::ENTREPRISE); // Auto-assign role
     }
 
     //Relationships
@@ -41,18 +40,7 @@ class Entreprise
 
 
 
-    //Getters and Setter
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
-    public function setId(int $id): static
-    {
-        $this->id = $id;
-
-        return $this;
-    }
 
     public function getNomEntreprise(): ?string
     {
